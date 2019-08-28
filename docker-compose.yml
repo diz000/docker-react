@@ -1,0 +1,20 @@
+version: "3"
+services:
+  web:
+    build:
+      context: . #if we nested our project we would specify folder like "reactprojectfolder"
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules # don't map node_modules inside container
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
